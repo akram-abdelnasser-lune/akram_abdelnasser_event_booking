@@ -9,7 +9,9 @@
     <%= link_to 'My Booked Events', events_path(filter: 'my_booked_events'), class: "btn btn-secondary #{'active' if @filter == 'my_booked_events'}" %>
   </div>
   <div class="row">
-    <%= render @events %>
+    <% cache @events do %>
+      <%= render @events %>
+    <% end %>
   </div>
   <%= paginate @events %>
 </div>
