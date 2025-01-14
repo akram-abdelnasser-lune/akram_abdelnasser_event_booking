@@ -10,6 +10,7 @@ class EventsController < ApplicationController
               else
                 Event.future_events.page(params[:page])
               end
+    @events = @events.order(:start_time)
   end
 
   def create

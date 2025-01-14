@@ -1,6 +1,5 @@
 # filepath: /Users/akram.abdelnasser/Documents/private/events_booking/app/controllers/bookings_controller.rb
 class BookingsController < ApplicationController
-  before_action :authenticate_user!
   load_and_authorize_resource :event
   load_and_authorize_resource :booking, through: :event
 

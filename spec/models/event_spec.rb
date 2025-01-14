@@ -8,7 +8,7 @@ RSpec.describe Event, type: :model do
   describe '#book_tickets' do
     context 'when booking is successful' do
       it 'reduces the remaining tickets and creates a booking' do
-        expect(event.book_tickets(user1, 5)).to be_truthy
+        expect(event.book_or_update_tickets(user1, 5)).to be_truthy
         event.reload
         expect(event.remaining_tickets).to eq(5)
         expect(event.bookings.count).to eq(1)
@@ -19,7 +19,7 @@ RSpec.describe Event, type: :model do
 
     context 'when trying to book more tickets than available' do
       it 'does not allow the booking and adds an error' do
-        expect(event.book_tickets(user1, 15)).to be_falsey
+        expect(event.book_or_update_tickets(user1, 15)).to be_falsey
         expect(event.errors[:base]).to include('Not enough tickets available')
         event.reload
         expect(event.remaining_tickets).to eq(10)
@@ -31,8 +31,8 @@ RSpec.describe Event, type: :model do
       it 'allows only one booking to succeed' do
         threads = []
 
-        threads << Thread.new { event.book_tickets(user1, 10) }
-        threads << Thread.new { event.book_tickets(user2, 10) }
+        threads << Thread.new { event.book_or_update_tickets(user1, 10) }
+        threads << Thread.new { event.book_or_update_tickets(user2, 10) }
 
         threads.each(&:join)
 
