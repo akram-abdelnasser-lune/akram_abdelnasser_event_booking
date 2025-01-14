@@ -1,7 +1,15 @@
 class EventsController < ApplicationController
   load_and_authorize_resource
   def index
-    @events = Event.future_events.page(params[:page])
+    @filter = params[:filter]
+    @events = case @filter
+              when 'my_created_events'
+                current_user.created_events.future_events.page(params[:page])
+              when 'my_booked_events'
+                current_user.booked_events.future_events.page(params[:page])
+              else
+                Event.future_events.page(params[:page])
+              end
   end
 
   def create
@@ -11,6 +19,12 @@ class EventsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def show
+    @bookings = @event.bookings.page(params[:page]) if @event.creator == current_user
+    @booking = @event.bookings.find_by_user_id(current_user.id)
+    @can_create_booking = @booking.blank? && @event.start_time > Time.now && @event.creator != current_user
   end
 
   def update

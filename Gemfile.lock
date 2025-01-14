@@ -104,8 +104,9 @@ GEM
       warden (~> 1.2.3)
     erubi (1.13.1)
     execjs (2.10.0)
+    faker (3.5.1)
+      i18n (>= 1.8.11, < 2)
     ffi (1.17.1-arm64-darwin)
-    flatpickr (4.6.13.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.6)
@@ -270,7 +271,7 @@ DEPENDENCIES
   capybara
   debug
   devise
-  flatpickr (~> 4.6)
+  faker
   importmap-rails
   jbuilder
   kaminari

@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_14_074314) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_14_081756) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bookings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "event_id", null: false
+    t.integer "number_of_tickets", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_bookings_on_event_id"
+    t.index ["user_id"], name: "index_bookings_on_user_id"
+  end
 
   create_table "events", force: :cascade do |t|
     t.string "name", null: false
@@ -23,6 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_14_074314) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "creator_id", null: false
+    t.integer "remaining_tickets"
     t.index ["creator_id"], name: "index_events_on_creator_id"
   end
 
@@ -44,5 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_14_074314) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "bookings", "events"
+  add_foreign_key "bookings", "users"
   add_foreign_key "events", "users", column: "creator_id"
 end

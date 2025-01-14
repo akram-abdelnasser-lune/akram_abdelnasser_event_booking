@@ -1,0 +1,31 @@
+<div class="container mt-5">
+  <h1><%= @event.name %></h1>
+  <p><%= @event.description %></p>
+  <p><%= @event.location %></p>
+  <p><%= l(@event.start_time, format: :long) %></p>
+  <p><strong>Total Tickets:</strong> <%= @event.total_tickets %></p>
+  <p><strong>Remaining Tickets:</strong> <%= @event.remaining_tickets %></p>
+
+  <div class="mt-3">
+    <% if @bookings.present? %>
+      <h2>Booked Users</h2>
+      <ul>
+        <% @bookings.each do |booking| %>
+          <li><%= booking.user.name %> - <%= booking.number_of_tickets %> tickets</li>
+        <% end %>
+      </ul>
+      <%= paginate @bookings %>
+    <% else %>
+      <% if @booking.present? %>
+        <% if can? :update, @booking %>
+            <%= link_to 'Update Booking', edit_event_booking_path(@event, @booking), class: 'btn btn-secondary' %>
+        <% end %>
+        <% if can? :destroy, @booking %>
+            <%= link_to 'Cancel Booking', event_booking_path(@event, @booking), method: :delete, data: { confirm: 'Are you sure?', "turbo-method": :delete }, class: 'btn btn-warning' %>
+        <% end %>
+      <% elsif @can_create_booking %>
+        <%= link_to 'Book', new_event_booking_path(@event), class: 'btn btn-primary' %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

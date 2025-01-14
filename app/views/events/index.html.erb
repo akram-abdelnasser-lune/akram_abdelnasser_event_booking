@@ -1,25 +1,15 @@
+<!-- filepath: /Users/akram.abdelnasser/Documents/private/events_booking/app/views/events/index.html.erb -->
 <div class="container mt-5">
-  <h1>Upcoming Events</h1>
+  <h1>Events</h1>
   <%= link_to 'Create Event', new_event_path, class: 'btn btn-primary mb-3' %>
+
+  <div class="btn-group mb-3" role="group" aria-label="Event Filters">
+    <%= link_to 'Upcoming Events', events_path, class: "btn btn-secondary #{'active' if @filter.nil?}" %>
+    <%= link_to 'My Created Events', events_path(filter: 'my_created_events'), class: "btn btn-secondary #{'active' if @filter == 'my_created_events'}" %>
+    <%= link_to 'My Booked Events', events_path(filter: 'my_booked_events'), class: "btn btn-secondary #{'active' if @filter == 'my_booked_events'}" %>
+  </div>
   <div class="row">
-    <% @events.each do |event| %>
-      <div class="col-md-4">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="card-title"><%= event.name %></h5>
-            <p class="card-text"><%= event.description %></p>
-            <p class="card-text"><%= event.location %></p>
-            <p class="card-text"><%= event.start_time.strftime("%B %d, %Y %H:%M") %></p>
-            <% if can? :edit, event %>
-              <%= link_to 'Edit', edit_event_path(event), class: 'btn btn-secondary' %>
-            <% end %>
-            <% if can? :destroy, event %>
-              <%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+    <%= render @events %>
   </div>
   <%= paginate @events %>
 </div>
