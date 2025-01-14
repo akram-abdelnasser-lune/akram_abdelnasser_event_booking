@@ -74,4 +74,5 @@ end
 gem 'devise'
 gem 'activeadmin'
 gem 'sassc-rails'
+gem 'bootstrap', '~> 5.1.3'
 
