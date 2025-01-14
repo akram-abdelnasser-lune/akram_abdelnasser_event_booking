@@ -5,11 +5,6 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :name, presence: true, uniqueness: true
 
-  def self.ransackable_attributes(auth_object = nil)
-    super
-  end
-
-  def self.ransackable_associations(auth_object = nil)
-    super
-  end
+  # ASSOCIATIONS #
+  has_many :created_events, class_name: 'Event', foreign_key: 'creator_id', dependent: :destroy
 end
