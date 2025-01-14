@@ -19,6 +19,7 @@
 # Some enhancements that can be done
 
 - **Ajax requests**: Introduce some ajax requests in the filtering and pagination to avoid page refresh
+- **QrCode**: Add qrcodes for the tickets generated
 - **Frontend**: Make the frontend more responsive and improve the layouts
 - **Email Notifications**: Implement email notifications to inform users about booking confirmations, event updates, and cancellations and to confirm regsitrations.
 - **Event Search and Filtering**: Add advanced search and filtering options to allow users to find events based on various criteria such as location, date, and category.
