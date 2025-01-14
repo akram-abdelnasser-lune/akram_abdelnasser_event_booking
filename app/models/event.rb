@@ -9,10 +9,9 @@ class Event < ApplicationRecord
 
   # SCOPES #
   scope :future_events, -> { where('start_time > ?', Time.now) }
-
-  def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "description", "id", "location", "name", "start_time", "total_tickets", "updated_at"]
-  end
+  
+  # ASSOCIATIONS #
+  belongs_to :creator, class_name: "User"
   
   private
 
