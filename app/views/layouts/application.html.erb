@@ -11,6 +11,9 @@
   </head>
 
   <body>
+    <% if !devise_controller? %>
+      <%= render 'shared/navbar' %>
+    <% end %>
     <%= display_flash_messages %>
     <%= yield %>
   </body>
