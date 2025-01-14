@@ -22,11 +22,11 @@ class Ability
     end
 
     can :update, Booking do |booking|
-      booking.user_id == user.id
+      booking.user_id == user.id && booking.event.start_time > Time.now
     end
 
     can :destroy, Booking do |booking|
-      booking.user_id == user.id
+      booking.user_id == user.id && booking.event.start_time > Time.now
     end
   end
 end
